@@ -1,0 +1,28 @@
+name: Build Starter Project
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dotnet-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - run: dotnet restore dotnet-api/AiCodeReview.Api.csproj
+      - run: dotnet build dotnet-api/AiCodeReview.Api.csproj --configuration Release --no-restore
+
+  python-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r python-ai-service/requirements.txt
+      - run: python -m py_compile python-ai-service/main.py

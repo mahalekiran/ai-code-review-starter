@@ -1,0 +1,17 @@
+services:
+  dotnet-api:
+    build: ./dotnet-api
+    ports:
+      - "5000:8080"
+    environment:
+      - AI_SERVICE_URL=http://python-ai-service:8000
+    depends_on:
+      - python-ai-service
+
+  python-ai-service:
+    build: ./python-ai-service
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4.1-mini}

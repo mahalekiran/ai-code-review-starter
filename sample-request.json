@@ -1,0 +1,5 @@
+{
+  "fileName": "UserRepository.cs",
+  "language": "csharp",
+  "code": "public User GetUser(string username) { var sql = \"SELECT * FROM Users WHERE Name='\" + username + \"'\"; return db.Query<User>(sql).FirstOrDefault(); }"
+}
